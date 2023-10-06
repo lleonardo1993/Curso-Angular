@@ -1,0 +1,16 @@
+<form [formGroup]="formCliente" (ngSubmit)="onSubmit()">
+
+    <div formArrayName="nomeEspecs">
+      <div *ngFor="let nomeEspec of nomeEspecs.controls; let i = index">
+        
+        <div [formGroupName]="i">
+          <input formControlName="nomeEspec" placeholder="Nome Espec">
+          <button (click)="removeNomeEspecField(i)">Remover</button>
+        </div>
+  
+      </div>
+    </div>
+  
+    <button (click)="addNomeEspecField()">Adicionar NomeEspec</button>
+    <button type="submit">Enviar</button>
+  </form>

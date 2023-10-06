@@ -2,7 +2,8 @@ import { Component, OnInit,  DoCheck,
   AfterContentInit,
   AfterContentChecked,
   AfterViewChecked,
-  AfterViewInit } from '@angular/core';
+  AfterViewInit, 
+  OnDestroy} from '@angular/core';
 /*
   DoCheck,
   AfterContentInit,
@@ -14,18 +15,33 @@ import { Component, OnInit,  DoCheck,
   selector: 'app-root',
   template: `
    
+   
+   <app-title *ngIf="destruir"></app-title>
+   <br>
+   <button (click)="destruirComponent()">Destruir Component</button>
+   <br>
    <app-title title="Olá Mundo"></app-title>
+   
    {{valor}}
    <button (click)="adicionar()">Adicionar</button>
    <router-outlet></router-outlet>
   `
 })
-export class AppComponent implements OnInit,  DoCheck,
+export class AppComponent implements OnInit, DoCheck,
 AfterContentInit,
 AfterContentChecked,
 AfterViewChecked,
-AfterViewInit {
-  
+AfterViewInit,
+OnDestroy {
+
+  // variavel tipada com valor boolean
+  public destruir:boolean = true;
+
+  // *ngIf funcao usada para distruir elemento
+  destruirComponent(){
+    this.destruir = false;
+  }
+
   // variavel tipada com valor / number
   public valor: number = 1;
 
@@ -34,6 +50,9 @@ AfterViewInit {
     return this.valor += 1;
   }
   constructor() {}
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
   
   // ngOnInit Este evento é inicializado após o Angular exibir pela primeira vez as propriedades vinculadas aos dados
   // ou quando o componente foi inicializado. Este evento é usado principalmente para inicializar dados em um componente
@@ -63,5 +82,12 @@ AfterViewInit {
   // ngAfterViewChecked: método chamado quando renderizado a pagina
   ngAfterViewChecked(): void {
     console.log("ngAfterViewChecked")  
+  }
+
+  criarElemento(){
+    const divElement = document.createElement("div");
+
+    
+
   }
 }
