@@ -31,16 +31,7 @@ export class FormularioComponent implements OnInit {
     this.nomeEspecs.push(this.createNomeEspecField());
   }
 
-  removeNomeEspecField(index: number) {
-    if (index === this.nomeEspecs.controls.length - 1) {
-        this.nomeEspecs.controls[index].reset(); // limpa o valor do último controle
-        if (this.selectedClients[index]) {
-            this.selectedClients[index] = null; // remove o nome e e-mail associados
-        }
-    } else {
-        this.nomeEspecs.removeAt(index);
-    }
-}
+ 
 
 
   onSubmit() {
@@ -70,23 +61,24 @@ selectedClients: any[] = [];
 
 isConsulted: boolean[] = [];
 
-// constaClient() {
-//   this.selectedClients = [];  // Limpar o array anterior
-
-//   this.formCliente.value.nomeEspecs.forEach((item: { nomeEspec: string }) => {
-//       const found = this.data.find(dataItem => dataItem.funcional === item.nomeEspec);
-//       this.selectedClients.push(found ? found : null);
-//   });
-// }
-
 
 constaClient(index: number) {
-  const found = this.data.find(dataItem => 
-    dataItem.funcional === this.formCliente.value.nomeEspecs[index].nomeEspec);
+  const funcionalToSearch = String(this.formCliente.value.nomeEspecs[index].nomeEspec);
+  const found = this.data.find(dataItem => dataItem.funcional === funcionalToSearch);
   if (found) {
-      this.isConsulted[index] = true;
-      this.selectedClients[index] = found;
+    this.isConsulted[index] = true;
+    this.selectedClients[index] = found;
+  } else {
+    this.isConsulted[index] = false;
+    this.selectedClients[index] = null;
   }
+}
+
+
+removeNomeEspecField(index: number) {
+  this.nomeEspecs.removeAt(index);
+  this.selectedClients.splice(index, 1);
+  this.isConsulted.splice(index, 1);
 }
 
 

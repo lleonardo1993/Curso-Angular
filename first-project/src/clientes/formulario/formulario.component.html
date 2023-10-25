@@ -1,10 +1,10 @@
 <form [formGroup]="formCliente" (ngSubmit)="onSubmit()">
-
   <div formArrayName="nomeEspecs">
     <div *ngFor="let nomeEspec of nomeEspecs.controls; let i = index">
-      
       <div [formGroupName]="i">
-        <input formControlName="nomeEspec" placeholder="Digite a Funcional">
+        
+        <!-- Campo funcional só será exibido se não tiver sido consultado -->
+        <input *ngIf="!isConsulted[i]" formControlName="nomeEspec" placeholder="Digite a Funcional">
 
         <!-- Exiba os botões com base na condição isConsulted -->
         <button *ngIf="!isConsulted[i]" (click)="constaClient(i)">
@@ -17,13 +17,14 @@
 
       <!-- Exiba os detalhes do cliente aqui -->
       <div *ngIf="selectedClients[i]">
+        <p>Funcional: {{selectedClients[i].funcional}}</p>
         <p>Nome: {{selectedClients[i].nome}}</p>
         <p>Email: {{selectedClients[i].email}}</p>
       </div>
-    
     </div>
   </div>
+<!-- Exibe o botão sempre, mas desabilita se a quantidade for 3 ou mais -->
+<button [disabled]="nomeEspecs.length >= 2" (click)="addNomeEspecField()">Adicionar NomeEspec</button>
 
-  <button (click)="addNomeEspecField()">Adicionar NomeEspec</button>
-
+  
 </form>
