@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 })
 export class FormularioComponent implements OnInit {
   formCliente: FormGroup;
-
+  
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -38,4 +38,36 @@ export class FormularioComponent implements OnInit {
   onSubmit() {
     console.log(this.formCliente.value);
   }
+
+  
+
+data = [
+  {
+    funcional: "987352015",
+    nome: "leonardo",
+    email: "leo@gmail.com"
+  },
+  {
+    funcional: "32323222",
+    nome: "luiz",
+    email: "luiz@gmail.com"
+  },
+  {
+    funcional: "99999999",
+    nome: "jean",
+    email: "jean@gmail.com"
+  }
+];
+selectedClients: any[] = [];
+
+constaClient() {
+  this.selectedClients = [];  // Limpar o array anterior
+
+  this.formCliente.value.nomeEspecs.forEach((item: { nomeEspec: string }) => {
+      const found = this.data.find(dataItem => dataItem.funcional === item.nomeEspec);
+      this.selectedClients.push(found ? found : null);
+  });
+}
+
+
 }

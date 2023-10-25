@@ -1,16 +1,25 @@
 <form [formGroup]="formCliente" (ngSubmit)="onSubmit()">
 
-    <div formArrayName="nomeEspecs">
-      <div *ngFor="let nomeEspec of nomeEspecs.controls; let i = index">
-        
-        <div [formGroupName]="i">
-          <input formControlName="nomeEspec" placeholder="Nome Espec">
-          <button (click)="removeNomeEspecField(i)">Remover</button>
-        </div>
-  
+  <div formArrayName="nomeEspecs">
+    <div *ngFor="let nomeEspec of nomeEspecs.controls; let i = index">
+      
+      <div [formGroupName]="i">
+        <input formControlName="nomeEspec" placeholder="Digite a Funcional">
+        <button (click)="removeNomeEspecField(i)">Remover</button>
       </div>
+
+      <!-- Exiba os detalhes do cliente aqui -->
+      <div *ngIf="selectedClients[i]">
+        <p>Nome: {{selectedClients[i].nome}}</p>
+        <p>Email: {{selectedClients[i].email}}</p>
+      </div>
+    
     </div>
-  
-    <button (click)="addNomeEspecField()">Adicionar NomeEspec</button>
-    <button type="submit">Enviar</button>
-  </form>
+  </div>
+
+  <div>
+    <button (click)="constaClient()">Consultar client</button>
+  </div>
+
+  <button (click)="addNomeEspecField()">Adicionar NomeEspec</button>
+</form>
