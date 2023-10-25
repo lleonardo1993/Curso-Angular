@@ -5,7 +5,14 @@
       
       <div [formGroupName]="i">
         <input formControlName="nomeEspec" placeholder="Digite a Funcional">
-        <button (click)="removeNomeEspecField(i)">Remover</button>
+
+        <!-- Exiba os botões com base na condição isConsulted -->
+        <button *ngIf="!isConsulted[i]" (click)="constaClient(i)">
+          <i class="fas fa-search"></i> Consultar
+        </button>
+        <button *ngIf="isConsulted[i]" (click)="removeNomeEspecField(i)">
+          Remover
+        </button>
       </div>
 
       <!-- Exiba os detalhes do cliente aqui -->
@@ -17,9 +24,6 @@
     </div>
   </div>
 
-  <div>
-    <button (click)="constaClient()">Consultar client</button>
-  </div>
-
   <button (click)="addNomeEspecField()">Adicionar NomeEspec</button>
+
 </form>
